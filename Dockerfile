@@ -14,5 +14,5 @@ EXPOSE 5000
 
 # Run the application directly
 # Use gunicorn to run the application (production server)
-# Ensure we bind to 0.0.0.0 and use the PORT environment variable
-CMD gunicorn app:app --bind 0.0.0.0:$PORT
+# We use 'sh -c' to ensure the $PORT variable is correctly expanded
+CMD ["sh", "-c", "gunicorn app:app --bind 0.0.0.0:${PORT:-5000} --workers 2 --threads 4"]
