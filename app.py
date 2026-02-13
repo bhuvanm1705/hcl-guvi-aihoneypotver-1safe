@@ -34,6 +34,15 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True, allow_headers="*")
 
+# DEBUG: Log every request to stdout to verify connectivity
+@app.before_request
+def log_request_info():
+    print(f"DEBUG: Incoming Request {request.method} {request.path}", flush=True)
+
+@app.route('/ping')
+def ping():
+    return "pong", 200
+
 # Configuration
 API_KEY = os.getenv('API_KEY', 'your-secret-api-key')
 GROQ_API_KEY = os.getenv('GROQ_API_KEY')
