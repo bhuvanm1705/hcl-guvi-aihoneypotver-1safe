@@ -13,4 +13,6 @@ COPY . .
 EXPOSE 5000
 
 # Run the application directly
-CMD ["python", "app.py"]
+# Use gunicorn to run the application (production server)
+# Ensure we bind to 0.0.0.0 and use the PORT environment variable
+CMD gunicorn app:app --bind 0.0.0.0:$PORT
